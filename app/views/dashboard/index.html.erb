@@ -31,7 +31,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Por Día</div>
         <div class="panel-body">
-          <div id="daily-expenses-chart" style="height: 250px;"></div>
+          <%= content_tag :div, "", id: "chartContainer02", style: "height: 250px;", data: {transactions: @transactions.totals_by_date_type} %>
         </div>
       </div>
     </div>

@@ -6,10 +6,11 @@
 #  typename   :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  color      :string
 #
 
 class Type < ApplicationRecord
 	has_many :transactions
 
-	validates :typename, presence: true
+	validates :typename, :color, presence: true
 end

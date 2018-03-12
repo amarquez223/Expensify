@@ -18,8 +18,12 @@ class Transaction < ApplicationRecord
 
   validates :date, :concept, :amount, presence: true 
 
-  def self.expenses_day(date)
-    Transaction.where("date = ?",date).sum("amount")
+  def self.expenses_day(date,type=nil)
+    if type
+      Transaction.where("date = ? AND type_id = ?",date, type).sum("amount")
+    else
+      Transaction.where("date = ?",date).sum("amount")
+    end
   end
 
   def self.expenses_today
@@ -91,40 +95,63 @@ class Transaction < ApplicationRecord
     Type.all.each do |type|
       arr_type = Array.new
       arr_month = Array.new
-      type_name = type.typename
 
       amount01 = expenses_month(mes01[0],mes01[1],type)
-      arr_month.push(type_name,mes01[0],mes01[1],amount01)
+      arr_month.push(mes01[0],mes01[1],amount01)
       arr_type.push(arr_month)
       arr_month = Array.new
 
       amount02 = expenses_month(mes02[0],mes02[1],type)
-      arr_month.push(type_name,mes02[0],mes02[1],amount02)
+      arr_month.push(mes02[0],mes02[1],amount02)
       arr_type.push(arr_month)
       arr_month = Array.new
       
       amount03 = expenses_month(mes03[0],mes03[1],type)
-      arr_month.push(type_name,mes03[0],mes03[1],amount03)
+      arr_month.push(mes03[0],mes03[1],amount03)
       arr_type.push(arr_month)
       arr_month = Array.new
       
       amount04 = expenses_month(mes04[0],mes04[1],type)
-      arr_month.push(type_name,mes04[0],mes04[1],amount04)
+      arr_month.push(mes04[0],mes04[1],amount04)
       arr_type.push(arr_month)
       arr_month = Array.new
       
       amount05 = expenses_month(mes05[0],mes05[1],type)
-      arr_month.push(type_name,mes05[0],mes05[1],amount05)
+      arr_month.push(mes05[0],mes05[1],amount05)
       arr_type.push(arr_month)
       arr_month = Array.new
       
       amount06 = expenses_month(mes06[0],mes06[1],type)
-      arr_month.push(type_name,mes06[0],mes06[1],amount06)
+      arr_month.push(mes06[0],mes06[1],amount06)
       arr_type.push(arr_month)
       
-      expenses.push(arr_type)
+      arr_temp = Array.new
+      arr_temp.push(type.typename,type.color,arr_type)
+
+      expenses.push(arr_temp)
     end
     expenses
   end
+
+  # Totales por Fecha y Tipo (Mes actual)
+  def self.totals_by_date_type
+    expenses = Array.new
+    hoy = Date.today
+    Type.all.each do |type|
+      arr_type = Array.new
+      arr_type.push(type.typename,type.color)
+      arr_days = Array.new
+      for i in 1..(hoy.day)
+        arr_1day = Array.new
+        fecha = Date.new(hoy.year,hoy.month,i)
+        amount = expenses_day(fecha,type.id)
+        arr_1day.push(i,amount)
+        arr_days.push(arr_1day)
+      end
+      arr_type.push(arr_days)
+      expenses.push(arr_type)
+    end
+    expenses  
+  end  
 
 end
