@@ -42,7 +42,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Por Categoría</div>
         <div class="panel-body">
-          <div id="category-chart" style="height: 250px;"></div>
+          <%= content_tag :div, "", id: "chartContainer03", style: "height: 250px;", data: {transactions: @transactions.totals_by_category_current_month} %>
         </div>
       </div>
     </div>

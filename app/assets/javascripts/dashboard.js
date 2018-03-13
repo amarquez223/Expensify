@@ -86,7 +86,6 @@ const transactions02 = $('#chartContainer02').data('transactions');
 let dataarray02 = [];
 
 // Lee la información de transactions02
-names = [];
 for (i = 0; i < transactions02.length; i++) {
 	temp = [];
 	for (j= 0; j < transactions02[i][2].length; j++) {
@@ -105,8 +104,6 @@ for (i = 0; i < transactions02.length; i++) {
 		dataPoints: temp
 	})
 }
-
-console.log(dataarray02);
 
 const chart02 = new CanvasJS.Chart("chartContainer02", {
 	backgroundColor: "#33373a",
@@ -141,5 +138,38 @@ function toggleDataSeries(e) {
 	}
 	chart02.render();
 }
+
+// Toma la información enviada por el servidor
+const transactions03 = $('#chartContainer03').data('transactions');
+
+// Crea el arreglo que contendrá los arreglos de datos para la primer gráfica
+let dataarray03 = [];
+
+// Lee la información de transactions03
+temp = [];
+for (i = 0; i < transactions03.length; i++) {
+	temp.push({
+		label : transactions03[i][0], 
+		y : transactions03[i][1]
+	})
+}
+	
+dataarray03.push({
+	type: "doughnut",
+	startAngle: 60,
+	//innerRadius: 60,
+	indexLabelFontSize: 17,
+	indexLabelFontColor: "white",
+	indexLabel: "{label} - #percent%",
+	toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+	dataPoints: temp
+})
+
+const chart03 = new CanvasJS.Chart("chartContainer03", {
+	backgroundColor: "#33373a",
+	animationEnabled: true,
+	data: dataarray03
+});
+chart03.render();
 
 }
