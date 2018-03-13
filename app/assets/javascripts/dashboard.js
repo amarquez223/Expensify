@@ -172,4 +172,62 @@ const chart03 = new CanvasJS.Chart("chartContainer03", {
 });
 chart03.render();
 
+// Toma la información enviada por el servidor
+const transactions04 = $('#chartContainer04').data('transactions');
+
+// Crea el arreglo que contendrá los arreglos de datos para la primer gráfica
+let dataarray04 = [];
+
+// Lee la información de transactions03
+let names = [];
+let colors = [];
+
+names[0] = "Mes Anterior";
+colors[0] = "#ff66cc";
+
+names[1] = "Mes Actual";
+colors[1] = "#66ffff";
+for (i = 0; i < transactions04.length; i++) {
+	temp = [];
+	for (j = 0; j < transactions04[i].length; j++) {
+		temp.push({
+			x : transactions04[i][j][0], 
+			y : transactions04[i][j][1]
+		})
+	}
+	dataarray04.push({
+		type: "splineArea",
+		showInLegend: true,
+		color: colors[i],
+		name: names[i],
+		dataPoints: temp
+	})
+}
+
+console.log(dataarray04);
+
+const chart04 = new CanvasJS.Chart("chartContainer04", {
+	backgroundColor: "#33373a",
+	animationEnabled: true,
+	axisX :{
+		interval: 1,
+		labelFontColor: "white"
+	},
+	axisY :{
+		valueFormatString: "#0,,.M",
+		prefix: "$",
+		labelFontColor: "white"
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		fontColor: "white"
+	},
+	data: dataarray04
+});
+
+chart04.render();
+
+
 }

@@ -169,4 +169,29 @@ class Transaction < ApplicationRecord
     expenses
   end
 
+  def self.daily_amounts_current_previous_month
+    expenses = Array.new
+    hoy = Date.today
+    days_previous_month = (Date.new(hoy.year,hoy.month,1) -1).day
+    mesant = prev_month(hoy.year,hoy.month)
+    points_current_month = Array.new
+    amount = 0
+    for i in 1..(hoy.day)
+      amount = amount + expenses_day(Date.new(hoy.year,hoy.month,i))
+      temp = Array.new
+      temp.push(i,amount)
+      points_current_month.push(temp)
+    end
+    points_previous_month = Array.new
+    amount = 0
+    for i in 1..(days_previous_month)
+      amount = amount + expenses_day(Date.new(mesant[0],mesant[1],i))
+      temp = Array.new
+      temp.push(i,amount)
+      points_previous_month.push(temp)
+    end
+    expenses.push(points_previous_month,points_current_month)
+    expenses
+  end
+
 end

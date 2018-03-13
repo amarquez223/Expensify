@@ -50,7 +50,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Acumulado</div>
         <div class="panel-body">
-          <div id="month-acc" style="height: 250px;"></div>
+          <%= content_tag :div, "", id: "chartContainer04", style: "height: 250px;", data: {transactions: @transactions.daily_amounts_current_previous_month} %>
         </div>
       </div>
     </div>
