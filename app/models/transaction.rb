@@ -34,7 +34,7 @@ class Transaction < ApplicationRecord
     expenses_day(Date.today - 1)
   end
 
-  def self.expenses_month(year,month,type=nil,category=nil)
+  def self.expenses_month(year,month,type=nil,category=nil,records=nil)
     if month == 12
       nextmonth = 1
       nextyear = year + 1
@@ -46,14 +46,18 @@ class Transaction < ApplicationRecord
     inidate = Date.new(year,month,1)
     findate = Date.new(nextyear,nextmonth,1) - 1 
     
-    if type and category
-      Transaction.where("date between ? AND ? AND type_id = ? AND category_id = ?", inidate, findate, type, category).sum("amount")
-    elsif type and !category
-      Transaction.where("date between ? AND ? AND type_id = ?", inidate, findate, type).sum("amount")
-    elsif !type and category
-      Transaction.where("date between ? AND ? AND category_id = ?", inidate, findate, category).sum("amount")        
+    if !records
+      if type and category
+        Transaction.where("date between ? AND ? AND type_id = ? AND category_id = ?", inidate, findate, type, category).sum("amount")
+      elsif type and !category
+        Transaction.where("date between ? AND ? AND type_id = ?", inidate, findate, type).sum("amount")
+      elsif !type and category
+        Transaction.where("date between ? AND ? AND category_id = ?", inidate, findate, category).sum("amount")        
+      else
+        Transaction.where("date between ? AND ?", inidate, findate).sum("amount")
+      end
     else
-      Transaction.where("date between ? AND ?", inidate, findate).sum("amount")
+      Transaction.where("date between ? AND ?", inidate, findate)
     end
   end
 

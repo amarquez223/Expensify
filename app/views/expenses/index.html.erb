@@ -1,41 +1,54 @@
+<% hoy = Date.today %>
+
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <h4 class="filter-header">Transaction Type <span>Choose to filter</span></h4>
+      <h4 class="filter-header">Tipo de Transacción <span>Selecciona para filtrar</span></h4>
       <div class="list-group filter-type">
-        <a href="#" class="list-group-item">Purchase</a>
-        <a href="#" class="list-group-item">Withdrawal</a>
-        <!-- more transaction types -->
+        <% @types.each do |t| %>
+          <a href="#" class="list-group-item"><%= t.typename %></a>
+        <% end %>
       </div>
 
       <h4 class="filter-header">Categoría <span>Selecciona para filtrar</span></h4>
       <div class="list-group filter-type">
-        <a href="#" class="list-group-item">Restaurants</a>
-        <a href="#" class="list-group-item">Car</a>
-        <!-- more categories  -->
+        <% @categories.each do |c| %>
+          <a href="#" class="list-group-item"><%= c.catname %></a>
+        <% end %>
       </div>
     </div>
+
+    <% total = 0 %>
+    <% count = 0 %>
+    <% average = 0 %>
+    <% @transactions.each do |tr| %>
+      <% total = total + tr.amount %>
+      <% count = count + 1 %>
+    <% end %>
+    <% average = total / count %>
+
     <div class="col-md-9 index-data">
       <div class="row" style="margin-top: 10px;">
         <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">$2,500,000</div>
+          <div class="summary-value"><%= number_to_currency(total,precision: 0) %></div>
           <div class="summary-label">Total</div>
         </diV>
         <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">2</div>
-          <div class="summary-label">Transactions</div>
+          <div class="summary-value"><%= count %></div>
+          <div class="summary-label">Transacciones</div>
         </div>
         <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">$1,000,000</div>
-          <div class="summary-label">Average</div>
+          <div class="summary-value"><%= number_to_currency(average,precision: 0) %></div>
+          <div class="summary-label">Promedio</div>
         </div>
       </div>
 
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-12">
-          <a href="#" class="btn btn-success pull-left"><span class="glyphicon glyphicon-plus"></span> New Expense</a>
+          <a href="#" class="btn btn-success pull-left"><span class="glyphicon glyphicon-plus"></span> Nuevo Gasto</a>
           <h4 class="dropdown pull-right">
-            <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown">April 2016 <span class="caret"></span></button>
+            <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown">
+              <%= hoy.strftime("%b") + "-" + hoy.strftime("%Y") %> <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu">
               <li role="presentation"><a href="#">April 2016</a></li>
               <li role="presentation"><a href="#">March 2016</a></li>
@@ -55,27 +68,29 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="date">
-              <div class="day">24</div>
-              <div class="month">Apr</div>
-            </td>
-            <td>
-              <div>
-                <span class="type">Purchase</span>
-              </div>
-              <div>
-                <span class="concept">Example concept</span>
-              </div>
-            </td>
-            <td class="category text-right">Restauratns</td>
-            <td class="text-right" style="width: 170px;">
-              <div class="amount">$1,000,000</div>
-              <div class="actions">
-                <a href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a>
-                <a href="#"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-            </td>
-          </tr>
+          <% @transactions.each do |tr| %>
+            <tr>
+              <td class="date">
+                <div class="day"><%= tr.date.day %></div>
+                <div class="month"><%= tr.date.strftime("%b") %></div>
+              </td>
+              <td>
+                <div>
+                  <span class="type"><%= tr.type.typename %></span>
+                </div>
+                <div>
+                  <span class="concept"><%= tr.concept %></span>
+                </div>
+              </td>
+              <td class="category text-right"><%= tr.category.catname %></td>
+              <td class="text-right" style="width: 170px;">
+                <div class="amount"><%= number_to_currency(tr.amount, precision: 0) %></div>
+                <div class="actions">
+                  <a href="#"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                  <a href="#"><span class="glyphicon glyphicon-trash"></span> Borrar</a>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
