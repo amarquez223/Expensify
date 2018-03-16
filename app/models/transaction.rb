@@ -57,7 +57,15 @@ class Transaction < ApplicationRecord
         Transaction.where("date between ? AND ?", inidate, findate).sum("amount")
       end
     else
-      Transaction.where("date between ? AND ?", inidate, findate)
+      if type and category
+        Transaction.where("date between ? AND ? AND type_id = ? AND category_id = ?", inidate, findate, type, category)
+      elsif type and !category
+        Transaction.where("date between ? AND ? AND type_id = ?", inidate, findate, type)
+      elsif !type and category
+        Transaction.where("date between ? AND ? AND category_id = ?", inidate, findate, category)
+      else
+        Transaction.where("date between ? AND ?", inidate, findate)
+      end
     end
   end
 
