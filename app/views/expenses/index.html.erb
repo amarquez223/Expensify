@@ -1,3 +1,11 @@
+<% if message.present? %>
+  <div class="alert alert-success alert-growl">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <%= message %>
+  </div>
+<% end %>
+
+
 <div class="container">
   <div class="row">
     <div class="col-md-3">
@@ -64,53 +72,9 @@
         <div class="col-md-12">
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newexpense"><span class="glyphicon glyphicon-plus"></span> Nuevo Gasto</button>
 
-          <div id="newexpense" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-              <% @transaction = Transaction.new %>
-              <%= form_for @transaction, url: {action: "create"}, html: {class: "modal-content"} do |tr| %>
-
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Gasto Nuevo</h4>
-                </div>
-                
-                <div class="modal-body">
-                  <%= label_tag(:type_id, "Tipo:") %>
-                  <% type_options = Array.new() %>
-                  <% @types.each do |t| %>
-                    <% temp = Array.new() %>
-                    <% temp.push t.typename,t.id %>
-                    <% type_options.push temp %>
-                  <% end %>
-                  <%= select_tag(:type_id, options_for_select(type_options)) %>
-
-                  <%= label_tag(:date, "Fecha:") %>
-                  <%= date_field_tag (:date) %>
-                  <%= label_tag(:concept, "Concepto:") %>
-                  <%= text_field_tag (:concept) %>
-                  
-                  <%= label_tag(:category_id, "Categoría:") %>
-                  <% cat_options = Array.new() %>
-                  <% @categories.each do |c| %>
-                    <% temp = Array.new() %>
-                    <% temp.push c.catname,c.id %>
-                    <% cat_options.push temp %>
-                  <% end %>
-                  <%= select_tag(:category_id, options_for_select(cat_options)) %>
-                  <%= label_tag(:amount, "Valor:") %>
-                  <%= number_field_tag (:amount) %>
-                  
-                </div>
-                    
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <%= submit_tag("Crear Gasto") %>
-                </div>
-              <% end %>
-                
-            </div>
-          </div>
+          <% @transaction = Transaction.new %>
+          
+          <%= render 'modal' %>
 
           <h4 class="dropdown pull-right">
             <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown">
@@ -153,8 +117,8 @@
               <td class="text-right" style="width: 170px;">
                 <div class="amount"><%= number_to_currency(tr.amount, precision: 0) %></div>
                 <div class="actions">
-                  <a href="#"><span class="glyphicon glyphicon-edit"></span> Editar</a>
-                  <a href="#"><span class="glyphicon glyphicon-trash"></span> Borrar</a>
+                  <%= link_to ("<span class='glyphicon glyphicon-edit'>Editar</span>").html_safe, edit_expense_path(tr.id), remote: true%>
+                  <%= link_to ("<span class='glyphicon glyphicon-trash'>Borrar</span>").html_safe, { action: "destroy", controller: "expenses", id: tr.id}, method: :delete, data: { confirm: "Realmente quieres eliminar este gasto?" } %>
               </td>
             </tr>
           <% end %>
