@@ -3,4 +3,16 @@ Rails.application.routes.draw do
 	root 'dashboard#index'
 
 	resources :expenses, only: [:index, :create, :edit, :destroy]
+
+	#Definición de la API
+	namespace :api, defaults: {format: :json} do
+
+	  namespace :v1 do
+	    get 'expenses', to: "expenses#index"
+	    post 'expenses', to: "expenses#create"
+	    patch 'expenses/:id', to: "expenses#update"
+	    delete 'expenses/:id', to: "expenses#destroy"
+	  end
+
+	end
 end

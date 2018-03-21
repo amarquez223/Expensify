@@ -117,7 +117,7 @@
               <td class="text-right" style="width: 170px;">
                 <div class="amount"><%= number_to_currency(tr.amount, precision: 0) %></div>
                 <div class="actions">
-                  <%= link_to ("<span class='glyphicon glyphicon-edit'>Editar</span>").html_safe, edit_expense_path(tr.id), remote: true%>
+                  <%= link_to ("<span class='glyphicon glyphicon-edit'>Editar</span>").html_safe, edit_expense_path(tr.id), remote: true %>
                   <%= link_to ("<span class='glyphicon glyphicon-trash'>Borrar</span>").html_safe, { action: "destroy", controller: "expenses", id: tr.id}, method: :delete, data: { confirm: "Realmente quieres eliminar este gasto?" } %>
               </td>
             </tr>

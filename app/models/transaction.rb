@@ -16,7 +16,8 @@ class Transaction < ApplicationRecord
   belongs_to :type
   belongs_to :category
 
-  validates :date, :concept, :amount, presence: true 
+  validates :date, :concept, :amount, presence: true
+  validates :concept, length: {minimum: 5}
 
   def self.expenses_day(date,type=nil)
     if type

@@ -15,4 +15,8 @@ class TypeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+  	test "should not save type without name" do
+		type = Type.new
+		assert_not type.save, "Saved the type without a name"
+	end
 end
