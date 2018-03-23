@@ -1,6 +1,7 @@
 class Api::V1::ExpensesController < ApplicationController
 	protect_from_forgery with: :null_session
 
+	# get
 	def index
 		if params[:category_id].present?
 			cat = params[:category_id]
@@ -19,6 +20,7 @@ class Api::V1::ExpensesController < ApplicationController
 		render json: @transactions,  status: :ok
 	end
 
+	# post
 	def create
 		@transaction = Transaction.create(transaction_params)
 
@@ -29,6 +31,7 @@ class Api::V1::ExpensesController < ApplicationController
 		end
 	end
 
+	#patch
 	def update
 		@transaction = Transaction.find(params[:id])
 		if @transaction.update(transaction_params)
@@ -38,6 +41,7 @@ class Api::V1::ExpensesController < ApplicationController
 		end
 	end
 
+	#delete
 	def destroy
 		transaction = Transaction.find(params[:id])
 		transaction.destroy
