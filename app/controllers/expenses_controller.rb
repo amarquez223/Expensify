@@ -7,9 +7,14 @@ class ExpensesController < ApplicationController
 
 	def create
 		@transaction = Transaction.new(transaction_params)
-		message = "Gasto <strong>" + @transaction.concept + "</strong> por <strong>" + 
-			@transaction.amount.to_s.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
-			"</strong> en <strong>" + @transaction.date.strftime("%b") + "-" + @transaction.date.strftime("%Y") + 
+		concept = @transaction.concept.to_s
+		tdate = @transaction.date
+		month = tdate.strftime("%b").to_s
+		year = tdate.strftime("%Y").to_s
+		amount = @transaction.amount.to_s
+		message = "Gasto <strong>" + concept + "</strong> por <strong>" +
+			amount.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
+			"</strong> en <strong>" + month + "-" + year + 
 			"</strong> fue adicionado exitosamente"
 		if @transaction.save
 			data = initial
