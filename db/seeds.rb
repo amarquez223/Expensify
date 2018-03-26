@@ -25,7 +25,7 @@ Category.create([
 	])	
 
 1000.times do
-	Transaction.create([{
+	Expense.create([{
 		type_id: Faker::Number.between(1, 5),
 		category_id: Faker::Number.between(1, 8),
 		date: Faker::Date.between(200.days.ago,60.days.from_now),

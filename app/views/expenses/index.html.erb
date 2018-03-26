@@ -35,7 +35,7 @@
     <% total = 0 %>
     <% count = 0 %>
     <% average = 0 %>
-    <% @transactions.each do |tr| %>
+    <% @expenses.each do |tr| %>
       <% total = total + tr.amount %>
       <% count = count + 1 %>
     <% end %>
@@ -72,7 +72,7 @@
         <div class="col-md-12">
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newexpense"><span class="glyphicon glyphicon-plus"></span> Nuevo Gasto</button>
 
-          <% @transaction = Transaction.new %>
+          <% @expense = Expense.new %>
           
           <%= render 'modal' %>
 
@@ -99,7 +99,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @transactions.each do |tr| %>
+          <% @expenses.each do |tr| %>
             <tr>
               <td class="date">
                 <div class="day"><%= tr.date.day %></div>

@@ -15,42 +15,42 @@ class Api::V1::ExpensesController < ApplicationController
 			type =  '%'
 		end
 
-		@transactions =  Transaction.where('category_id like ? AND type_id like ?',cat,type)
+		@expenses =  Expense.where('category_id like ? AND type_id like ?',cat,type)
 
-		render json: @transactions,  status: :ok
+		render json: @expenses,  status: :ok
 	end
 
 	# post
 	def create
-		@transaction = Transaction.create(transaction_params)
+		@expense = Expense.create(expense_params)
 
-		if @transaction.save
-			render json: @transaction, status: :created
+		if @expense.save
+			render json: @expense, status: :created
 		else
-			render json: @transaction.errors, status: :unprocessable_entity
+			render json: @expense.errors, status: :unprocessable_entity
 		end
 	end
 
 	#patch
 	def update
-		@transaction = Transaction.find(params[:id])
-		if @transaction.update(transaction_params)
-			render json: @transaction, status: :ok
+		@expense = Expense.find(params[:id])
+		if @expense.update(expense_params)
+			render json: @expense, status: :ok
 		else
-			render json: @transaction.errors, status: :unprocessable_entity
+			render json: @expense.errors, status: :unprocessable_entity
 		end
 	end
 
 	#delete
 	def destroy
-		transaction = Transaction.find(params[:id])
-		transaction.destroy
+		expense = Expense.find(params[:id])
+		expense.destroy
 
 		head :no_content
 	end
 
 	private
-    def transaction_params
+    def expense_params
       params.permit(:type_id, :category_id, :date, :concept, :amount)
     end
 

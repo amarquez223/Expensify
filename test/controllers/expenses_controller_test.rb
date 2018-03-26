@@ -3,7 +3,7 @@ require 'test_helper'
 class ExpensesControllerTest < ActionDispatch::IntegrationTest
   
   setup do
-  	@transaction = transactions(:one)
+  	@expense = expenses(:one)
   end
 
   test "Should get index" do
@@ -11,12 +11,12 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
   	assert_response :success
   	assert_not_nil assigns(:types)
   	assert_not_nil assigns(:categories)
-  	assert_not_nil assigns(:transactions) 
+  	assert_not_nil assigns(:expenses) 
   end
 
   test "Should create an expense" do
   	assert_difference "Transaction.count" do
-  		post expenses_path, params: { transaction: {type_id: @transaction.type_id,  category_id: @transaction.category_id, date: @transaction.date, concept: @transaction.concept, amount: @transaction.amount }}
+  		post expenses_path, params: { expense: {type_id: @expense.type_id,  category_id: @expense.category_id, date: @expense.date, concept: @expense.concept, amount: @expense.amount }}
   	end
 
   	#assert_redirected_to expenses_path

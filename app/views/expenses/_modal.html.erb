@@ -1,12 +1,12 @@
 <div id="newexpense" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <%= form_for @transaction, url: {action: "create"}, html: {class: "modal-content"} do |tr| %>
+    <%= form_for @expense, url: {action: "create"}, html: {class: "modal-content"} do |tr| %>
 
-      <% if @transaction.errors.any? %>
+      <% if @expense.errors.any? %>
         <h1>Dentro del if</h1>
         <ul>
-          <% @transaction.errors.full_messages.each do |msg| %>
+          <% @expense.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
           <% end %>
         </ul>

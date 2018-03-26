@@ -1,19 +1,19 @@
 <div class="container">
   <div class="row">
     <div class="total-box col-md-3">
-      <%= number_to_currency(@transactions.expenses_today, precision: 0) %>
+      <%= number_to_currency(@expenses.expenses_today, precision: 0) %>
       <span>HOY</span>
     </div>
     <div class="total-box col-md-3">
-      <%= number_to_currency(@transactions.expenses_yesterday, precision: 0) %>
+      <%= number_to_currency(@expenses.expenses_yesterday, precision: 0) %>
       <span>AYER</span>
     </div>
     <div class="total-box col-md-3">
-      <%= number_to_currency(@transactions.expenses_this_month, precision: 0) %>
+      <%= number_to_currency(@expenses.expenses_this_month, precision: 0) %>
       <span>ESTE MES</span>
     </div>
     <div class="total-box col-md-3">
-      <%=  number_to_currency(@transactions.expenses_prev_month, precision: 0) %>
+      <%=  number_to_currency(@expenses.expenses_prev_month, precision: 0) %>
       <span>MES PASADO</span>
     </div>
   </div>
@@ -23,7 +23,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Últimos 6 Meses</div>
         <div class="panel-body">
-          <%= content_tag :div, "", id: "chartContainer01", style: "height: 250px;", data: {transactions: @transactions.totals_by_type_last_6months} %>
+          <%= content_tag :div, "", id: "chartContainer01", style: "height: 250px;", data: {expenses: @expenses.totals_by_type_last_6months} %>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Por Día</div>
         <div class="panel-body">
-          <%= content_tag :div, "", id: "chartContainer02", style: "height: 250px;", data: {transactions: @transactions.totals_by_date_type} %>
+          <%= content_tag :div, "", id: "chartContainer02", style: "height: 250px;", data: {expenses: @expenses.totals_by_date_type} %>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Por Categoría</div>
         <div class="panel-body">
-          <%= content_tag :div, "", id: "chartContainer03", style: "height: 250px;", data: {transactions: @transactions.totals_by_category_current_month} %>
+          <%= content_tag :div, "", id: "chartContainer03", style: "height: 250px;", data: {expenses: @expenses.totals_by_category_current_month} %>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Acumulado</div>
         <div class="panel-body">
-          <%= content_tag :div, "", id: "chartContainer04", style: "height: 250px;", data: {transactions: @transactions.daily_amounts_current_previous_month} %>
+          <%= content_tag :div, "", id: "chartContainer04", style: "height: 250px;", data: {expenses: @expenses.daily_amounts_current_previous_month} %>
         </div>
       </div>
     </div>

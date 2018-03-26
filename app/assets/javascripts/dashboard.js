@@ -1,21 +1,21 @@
 window.onload = function () {
 
 // Toma la información enviada por el servidor
-const transactions01 = $('#chartContainer01').data('transactions');
+const expenses01 = $('#chartContainer01').data('expenses');
 
 // Crea el arreglo que contendrá los arreglos de datos para la primer gráfica
 let dataarray01 = [];
 
-// Lee la información de transactions01
+// Lee la información de expenses01
 let i,j,k;
-for (i = 0; i < transactions01.length; i++) {
+for (i = 0; i < expenses01.length; i++) {
 	temp = [];
-	for (j= 0; j < transactions01[i][2].length; j++) {
+	for (j= 0; j < expenses01[i][2].length; j++) {
 		// Asigna en el arreglo dataarray01 los  arreglos que requiere CanvasJS para el gráfico
 		temp.push(
 		{
-				y : transactions01[i][2][j][2], 
-				x : new Date(transactions01[i][2][j][0],transactions01[i][2][j][1] -1)
+				y : expenses01[i][2][j][2], 
+				x : new Date(expenses01[i][2][j][0],expenses01[i][2][j][1] -1)
 		})	
 	}
 
@@ -23,8 +23,8 @@ for (i = 0; i < transactions01.length; i++) {
 	{
 		type: "stackedColumn",
 		showInLegend: true,
-		color: transactions01[i][1],
-		name: transactions01[i][0],
+		color: expenses01[i][1],
+		name: expenses01[i][0],
 		dataPoints: temp
 	});
 }
@@ -80,26 +80,26 @@ function toolTipContent(e) {
 
 
 // Toma la información enviada por el servidor
-const transactions02 = $('#chartContainer02').data('transactions');
+const expenses02 = $('#chartContainer02').data('expenses');
 
 // Crea el arreglo que contendrá los arreglos de datos para la primer gráfica
 let dataarray02 = [];
 
-// Lee la información de transactions02
-for (i = 0; i < transactions02.length; i++) {
+// Lee la información de expenses02
+for (i = 0; i < expenses02.length; i++) {
 	temp = [];
-	for (j= 0; j < transactions02[i][2].length; j++) {
+	for (j= 0; j < expenses02[i][2].length; j++) {
 		temp.push({
-			label : transactions02[i][2][j][0], 
-			y : transactions02[i][2][j][1]
+			label : expenses02[i][2][j][0], 
+			y : expenses02[i][2][j][1]
 		})
 	}	
 
 	dataarray02.push({
 		type: "column",
-		name: transactions02[i][0],
-		legendText: transactions02[i][0],
-		color: transactions02[i][1],
+		name: expenses02[i][0],
+		legendText: expenses02[i][0],
+		color: expenses02[i][1],
 		showInLegend: true, 
 		dataPoints: temp
 	})
@@ -140,17 +140,17 @@ function toggleDataSeries(e) {
 }
 
 // Toma la información enviada por el servidor
-const transactions03 = $('#chartContainer03').data('transactions');
+const expenses03 = $('#chartContainer03').data('expenses');
 
 // Crea el arreglo que contendrá los arreglos de datos para la primer gráfica
 let dataarray03 = [];
 
-// Lee la información de transactions03
+// Lee la información de expenses03
 temp = [];
-for (i = 0; i < transactions03.length; i++) {
+for (i = 0; i < expenses03.length; i++) {
 	temp.push({
-		label : transactions03[i][0], 
-		y : transactions03[i][1]
+		label : expenses03[i][0], 
+		y : expenses03[i][1]
 	})
 }
 	
@@ -173,12 +173,12 @@ const chart03 = new CanvasJS.Chart("chartContainer03", {
 chart03.render();
 
 // Toma la información enviada por el servidor
-const transactions04 = $('#chartContainer04').data('transactions');
+const expenses04 = $('#chartContainer04').data('expenses');
 
 // Crea el arreglo que contendrá los arreglos de datos para la primer gráfica
 let dataarray04 = [];
 
-// Lee la información de transactions03
+// Lee la información de expenses03
 let names = [];
 let colors = [];
 
@@ -187,12 +187,12 @@ colors[0] = "#ff66cc";
 
 names[1] = "Mes Actual";
 colors[1] = "#66ffff";
-for (i = 0; i < transactions04.length; i++) {
+for (i = 0; i < expenses04.length; i++) {
 	temp = [];
-	for (j = 0; j < transactions04[i].length; j++) {
+	for (j = 0; j < expenses04[i].length; j++) {
 		temp.push({
-			x : transactions04[i][j][0], 
-			y : transactions04[i][j][1]
+			x : expenses04[i][j][0], 
+			y : expenses04[i][j][1]
 		})
 	}
 	dataarray04.push({

@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
 	def index
-    	@transactions = Transaction.all
+    	@expenses = Expense.all
   	end
 end

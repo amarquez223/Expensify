@@ -9,7 +9,7 @@
 #
 
 class Category < ApplicationRecord
-	has_many :transactions
+	has_many :expenses
 
 	validates :catname, presence: true
 end

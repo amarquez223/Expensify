@@ -10,7 +10,7 @@
 #
 
 class Type < ApplicationRecord
-	has_many :transactions
+	has_many :expenses
 
 	validates :typename, :color, presence: true
 end

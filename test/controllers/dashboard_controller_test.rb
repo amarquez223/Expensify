@@ -8,7 +8,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
   test "Should get index" do
   	get root_path
   	assert_response :success
-  	assert_not_nil assigns(:transactions)
+  	assert_not_nil assigns(:expenses)
   end
 
 end

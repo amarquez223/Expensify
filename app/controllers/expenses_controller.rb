@@ -6,17 +6,17 @@ class ExpensesController < ApplicationController
 	end
 
 	def create
-		@transaction = Transaction.new(transaction_params)
-		concept = @transaction.concept.to_s
-		tdate = @transaction.date
+		@expense = Expense.new(expense_params)
+		concept = @expense.concept.to_s
+		tdate = @expense.date
 		month = tdate.strftime("%b").to_s
 		year = tdate.strftime("%Y").to_s
-		amount = @transaction.amount.to_s
+		amount = @expense.amount.to_s
 		message = "Gasto <strong>" + concept + "</strong> por <strong>" +
 			amount.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
 			"</strong> en <strong>" + month + "-" + year + 
 			"</strong> fue adicionado exitosamente"
-		if @transaction.save
+		if @expense.save
 			data = initial
 			render :index, locals: {active_type: data[0], active_cat: data[1], active_date: data[2], 
 				message: message.html_safe}
@@ -26,16 +26,16 @@ class ExpensesController < ApplicationController
 	def edit
 		@types = Type.all
 		@categories = Category.all
-		@transaction = Transaction.find(params[:id])
+		@expense = Expense.find(params[:id])
 	end
 
 	def destroy
-		transaction = Transaction.find(params[:id])
-		message = "Gasto <strong>" + transaction.concept + "</strong> por <strong>" + 
-			transaction.amount.to_s.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
-			"</strong> en <strong>" + transaction.date.strftime("%b") + "-" + transaction.date.strftime("%Y") + 
+		expense = Expense.find(params[:id])
+		message = "Gasto <strong>" + expense.concept + "</strong> por <strong>" + 
+			expense.amount.to_s.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
+			"</strong> en <strong>" + expense.date.strftime("%b") + "-" + expense.date.strftime("%Y") + 
 			"</strong> fue borrado exitosamente"
-		if transaction.destroy
+		if expense.destroy
 			data = initial
 			render :index, locals: {active_type: data[0], active_cat: data[1], active_date: data[2], 
 				message: message.html_safe}
@@ -43,7 +43,7 @@ class ExpensesController < ApplicationController
 	end
 
 	protected
-	def transaction_params
+	def expense_params
 		params.permit(:type_id,:category_id,:date,:concept,:amount)
 	end
 
@@ -70,7 +70,7 @@ class ExpensesController < ApplicationController
 			date = Date.today
 		end
 
-		@transactions = Transaction.expenses_month(date.year,date.month,type,cat,1).order('date DESC')
+		@expenses = Expense.expenses_month(date.year,date.month,type,cat,1).order('date DESC')
 		data = Array.new()
 		data.push type,cat,date
 		data
