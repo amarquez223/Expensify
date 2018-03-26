@@ -204,8 +204,6 @@ for (i = 0; i < expenses04.length; i++) {
 	})
 }
 
-console.log(dataarray04);
-
 const chart04 = new CanvasJS.Chart("chartContainer04", {
 	backgroundColor: "#33373a",
 	animationEnabled: true,
