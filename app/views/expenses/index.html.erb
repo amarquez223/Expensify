@@ -35,8 +35,8 @@
     <% total = 0 %>
     <% count = 0 %>
     <% average = 0 %>
-    <% @expenses.each do |tr| %>
-      <% total = total + tr.amount %>
+    <% @expenses.each do |e| %>
+      <% total = total + e.amount %>
       <% count = count + 1 %>
     <% end %>
     <% if count > 0 %>
@@ -99,26 +99,26 @@
           </tr>
         </thead>
         <tbody>
-          <% @expenses.each do |tr| %>
+          <% @expenses.each do |e| %>
             <tr>
               <td class="date">
-                <div class="day"><%= tr.date.day %></div>
-                <div class="month"><%= tr.date.strftime("%b") %></div>
+                <div class="day"><%= e.date.day %></div>
+                <div class="month"><%= e.date.strftime("%b") %></div>
               </td>
               <td>
                 <div>
-                  <span class="type"><%= tr.type.typename %></span>
+                  <span class="type"><%= e.type.typename %></span>
                 </div>
                 <div>
-                  <span class="concept"><%= tr.concept %></span>
+                  <span class="concept"><%= e.concept %></span>
                 </div>
               </td>
-              <td class="category text-right"><%= tr.category.catname %></td>
+              <td class="category text-right"><%= e.category.catname %></td>
               <td class="text-right" style="width: 170px;">
-                <div class="amount"><%= number_to_currency(tr.amount, precision: 0) %></div>
+                <div class="amount"><%= number_to_currency(e.amount, precision: 0) %></div>
                 <div class="actions">
-                  <%= link_to ("<span class='glyphicon glyphicon-edit'>Editar</span>").html_safe, edit_expense_path(tr.id), remote: true %>
-                  <%= link_to ("<span class='glyphicon glyphicon-trash'>Borrar</span>").html_safe, { action: "destroy", controller: "expenses", id: tr.id}, method: :delete, data: { confirm: "Realmente quieres eliminar este gasto?" } %>
+                  <%= link_to ("<span class='glyphicon glyphicon-edit'>Editar</span>").html_safe, edit_expense_path(e.id), remote: true %>
+                  <%= link_to ("<span class='glyphicon glyphicon-trash'>Borrar</span>").html_safe, { action: "destroy", controller: "expenses", id: e.id}, method: :delete, data: { confirm: "Realmente quieres eliminar este gasto?" } %>
               </td>
             </tr>
           <% end %>

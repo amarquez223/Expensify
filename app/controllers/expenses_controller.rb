@@ -8,9 +8,9 @@ class ExpensesController < ApplicationController
 	def create
 		@expense = Expense.new(expense_params)
 		concept = @expense.concept.to_s
-		tdate = @expense.date
-		month = tdate.strftime("%b").to_s
-		year = tdate.strftime("%Y").to_s
+		edate = @expense.date
+		month = edate.strftime("%b").to_s
+		year = edate.strftime("%Y").to_s
 		amount = @expense.amount.to_s
 		message = "Gasto <strong>" + concept + "</strong> por <strong>" +
 			amount.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
@@ -29,6 +29,16 @@ class ExpensesController < ApplicationController
 		@expense = Expense.find(params[:id])
 	end
 
+	def update
+		@expense = Expense.find(params[:id])
+		message = "Gasto actualizado exitosamente"
+		if @expense.update(expense_params)
+			data = initial
+			render :index, locals: {active_type: data[0], active_cat: data[1], active_date: data[2], 
+				message: message.html_safe}
+		end
+	end
+
 	def destroy
 		expense = Expense.find(params[:id])
 		message = "Gasto <strong>" + expense.concept + "</strong> por <strong>" + 
@@ -44,7 +54,7 @@ class ExpensesController < ApplicationController
 
 	protected
 	def expense_params
-		params.permit(:type_id,:category_id,:date,:concept,:amount)
+		params.require(:expense).permit(:type_id,:category_id,:date,:concept,:amount)
 	end
 
 	private
