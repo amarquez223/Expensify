@@ -5,7 +5,6 @@
   </div>
 <% end %>
 
-
 <div class="container">
   <div class="row">
     <div class="col-md-3">
@@ -70,11 +69,9 @@
 
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-12">
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newexpense"><span class="glyphicon glyphicon-plus"></span> Nuevo Gasto</button>
-
-          <% @expense = Expense.new %>
           
-          <%= render 'modal' %>
+          <% text = '<span class="glyphicon glyphicon-plus"></span> Nuevo Gasto' %>
+          <%= link_to text.html_safe, new_expense_path, remote: true, class: "btn btn-success" %>
 
           <h4 class="dropdown pull-right">
             <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown">
@@ -98,7 +95,7 @@
             <th class="text-right">Valor</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="gastos">
           <% @expenses.each do |e| %>
             <tr>
               <td class="date">

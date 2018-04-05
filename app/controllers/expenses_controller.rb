@@ -5,21 +5,24 @@ class ExpensesController < ApplicationController
 		render locals: {active_type: data[0], active_cat: data[1], active_date: data[2], message: nil}
 	end
 
+	def new
+		@types = Type.all
+		@categories = Category.all
+		@expense = Expense.new
+	end
+
 	def create
-		@expense = Expense.new(expense_params)
-		concept = @expense.concept.to_s
-		edate = @expense.date
-		month = edate.strftime("%b").to_s
-		year = edate.strftime("%Y").to_s
-		amount = @expense.amount.to_s
-		message = "Gasto <strong>" + concept + "</strong> por <strong>" +
-			amount.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
-			"</strong> en <strong>" + month + "-" + year + 
-			"</strong> fue adicionado exitosamente"
-		if @expense.save
-			data = initial
-			render :index, locals: {active_type: data[0], active_cat: data[1], active_date: data[2], 
-				message: message.html_safe}
+		@expense = Expense.create(expense_params)
+		if @expense.errors.empty?
+			concept = @expense.concept.to_s
+			edate = @expense.date
+			month = edate.strftime("%b").to_s
+			year = edate.strftime("%Y").to_s
+			amount = @expense.amount.to_s
+			@message = "Gasto <strong>" + concept + "</strong> por <strong>" +
+				amount.gsub(/(\d)(?=(\d{3})+(?!\d))/, "\\1,")  + 
+				"</strong> en <strong>" + month + "-" + year + 
+				"</strong> fue adicionado exitosamente"
 		end
 	end
 
@@ -31,11 +34,9 @@ class ExpensesController < ApplicationController
 
 	def update
 		@expense = Expense.find(params[:id])
-		message = "Gasto actualizado exitosamente"
-		if @expense.update(expense_params)
-			data = initial
-			render :index, locals: {active_type: data[0], active_cat: data[1], active_date: data[2], 
-				message: message.html_safe}
+		@expense.update(expense_params)
+		if @expense.errors.empty?
+			@message = "Gasto actualizado exitosamente"
 		end
 	end
 
